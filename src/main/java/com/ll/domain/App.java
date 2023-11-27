@@ -62,7 +62,7 @@ public class App {
         }
         for (int i = quotations.size() - 1; i >= 0; i--) {
             System.out.printf("%d / %s / %s\n"
-                    , quotations.get(i).id, quotations.get(i).authorName, quotations.get(i).content);
+                    , quotations.get(i).getId(), quotations.get(i).getAuthorName(), quotations.get(i).getContent());
         }
     }
 
@@ -88,7 +88,7 @@ public class App {
         for (int i = 0; i < quotations.size(); i++) {
             Quotation quotation = quotations.get(i);
 
-            if(quotation.id == id){
+            if(quotation.getId() == id){
                 return i;
             }
         }
@@ -103,7 +103,29 @@ public class App {
             System.out.println("id를 정확히 입력해주세요.");
             return;
         }
+        int index = findQuotationIndexById(id);
+
+        if(index == -1){
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
+            return;
+        }
+        Quotation quotation = quotations.get(index);
+        System.out.printf("명언(기존) : %s\n", quotation.getContent());
+        System.out.printf("명언 : ");
+        String content = scanner.nextLine();
+
+
+        System.out.printf("작가(기존) : %s\n", quotation.getAuthorName());
+        System.out.printf("작가 : ");
+        String authorName = scanner.nextLine();
+
+        quotation.setContent(content);
+        quotation.setAuthorName(authorName);
+
+        //quotations.set(index, quotation); //이미 quotations.get으로 객체의 주소를 받았기 때문에 수정됨
         System.out.printf("%d번 명언을 수정합니다.\n", id);
+
+
     }
 
 }
