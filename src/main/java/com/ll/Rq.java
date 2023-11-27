@@ -16,6 +16,10 @@ public class Rq {
 
         String[] cmdBits = cmd.split("\\?", 2);
         action = cmdBits[0].trim();
+        if(cmdBits.length == 1){ //cmd에 ?가 없는 경우 = 즉 명령만 있는경우
+            return;
+        }
+
         queryString = cmdBits[1].trim();
 
         String[] queryStringBits = queryString.split("&");
