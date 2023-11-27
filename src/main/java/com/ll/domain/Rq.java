@@ -1,16 +1,20 @@
-package com.ll;
+package com.ll.domain;
+
+
+import com.ll.standard.util.Ut;
 
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Rq {
-    String cmd;
-    String action;
-    String queryString;
-    Map<String, String> paramsMap;
+    private String cmd;
+    private String action;
+    private String queryString;
+    private Map<String, String> paramsMap;
 
 
-    Rq(String cmd){
+    public Rq(String cmd){
         this.cmd = cmd;
         paramsMap = new HashMap<>();
 
@@ -36,11 +40,13 @@ public class Rq {
 
     }
 
-    String getAction(){
+    public String getAction(){
         return action;
     }
 
     public int getParamAsInt(String paramName, int defaultValue){
+        return Ut.str.parseInt(paramsMap.get(paramName), defaultValue);
+     /*
         String paramValue = paramsMap.get(paramName);
 
         if(paramValue != null){
@@ -52,6 +58,8 @@ public class Rq {
         }
 
         return defaultValue;
+
+      */
 
     }
 

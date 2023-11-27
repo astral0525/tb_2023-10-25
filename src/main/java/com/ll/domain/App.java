@@ -1,23 +1,23 @@
-package com.ll;
+package com.ll.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class App {
+public class App {
+    private Scanner scanner;
+    private int lastQuotationId;
+    private  List<Quotation> quotations;
 
-    static int lastQuotationId;
-    static List<Quotation> quotations;
-    Scanner scanner;
 
-    App() {
+    public App() {
         lastQuotationId = 0;
         quotations = new ArrayList<>();
         scanner = new Scanner(System.in);
 
     }
 
-    void run() {
+    public void run() {
         while (true) {
             System.out.printf("명령) ");
             String cmd = scanner.nextLine();
@@ -44,7 +44,7 @@ class App {
         }
     }
 
-    void actionWrite() {
+    private void actionWrite() {
         System.out.printf("명언 : ");
         String content = scanner.nextLine();
         System.out.printf("작가 : ");
@@ -54,24 +54,26 @@ class App {
         System.out.printf("%d번 명언이 등록되었습니다.\n", lastQuotationId);
     }
 
-    void actionList() {
+    private void actionList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
+        if(quotations.size() == 0 ){
+            System.out.println("등록된 명언이 없습니다.");
+        }
         for (int i = quotations.size() - 1; i >= 0; i--) {
             System.out.printf("%d / %s / %s\n"
                     , quotations.get(i).id, quotations.get(i).authorName, quotations.get(i).content);
         }
-        System.out.println("총개수 : " + quotations.size());
     }
 
-    void actionRemove(Rq rq) {
+    private void actionRemove(Rq rq) {
         int id = rq.getParamAsInt("id", 0);
         if (id == 0) {
             System.out.println("id를 정확히 입력해주세요.");
             return;
         }
 
-        int index = getIndexOfQuotationById(id);
+        int index = findQuotationIndexById(id);
         if(index == -1){
             System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
             return;
@@ -82,7 +84,7 @@ class App {
     }
 
     //해당 Quotation.id의 Quotation index 찾기
-    int getIndexOfQuotationById(int id) {
+    private int findQuotationIndexById(int id) {
         for (int i = 0; i < quotations.size(); i++) {
             Quotation quotation = quotations.get(i);
 
@@ -95,7 +97,7 @@ class App {
 
     }
 
-    void actionModify(Rq rq) {
+    private void actionModify(Rq rq) {
         int id = rq.getParamAsInt("id", 0);
         if (id == 0) {
             System.out.println("id를 정확히 입력해주세요.");
