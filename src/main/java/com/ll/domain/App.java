@@ -15,7 +15,22 @@ public class App {
         quotations = new ArrayList<>();
         scanner = new Scanner(System.in);
 
+        initTestData();
+
     }
+    private void initTestData(){
+        for(int i=0; i<10; i++){
+            lastQuotationId++;
+            int id = lastQuotationId;
+            String content = "명언" + id;
+            String authorName = "작가"+ id;
+
+            Quotation quotation = new Quotation(id, content, authorName);
+            quotations.add(quotation);
+        }
+
+    }
+
 
     public void run() {
         while (true) {
