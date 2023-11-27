@@ -1,40 +1,20 @@
 package com.ll.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
 public class Quotation {
+    @Getter
+    @Setter
     private int id;
+    @Getter
+    @Setter
     private String content;
+    @Getter
+    @Setter
     private String authorName;
-
-    public Quotation(int id, String content, String authorName){
-        this.id = id;
-        this.content = content;
-        this.authorName = authorName;
-    }
-    public int getId(){
-        return id;
-    }
-
-    public void setId(int id){
-        this.id = id;
-    }
-
-    public String getContent(){
-        return content;
-    }
-    public void setContent(String content){
-        this.content = content;
-    }
-
-    public String getAuthorName(){
-        return authorName;
-    }
-    public void setAuthorName(String authorName){
-        this.authorName = authorName;
-    }
-
-
-
-
 
 
 }
