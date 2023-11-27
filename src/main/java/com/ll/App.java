@@ -66,18 +66,38 @@ class App {
 
     void actionRemove(Rq rq) {
         int id = rq.getParamAsInt("id", 0);
-        if (id == 0){
+        if (id == 0) {
             System.out.println("id를 정확히 입력해주세요.");
             return;
         }
-        System.out.printf("%d번 명언을 삭제합니다.\n", id);
 
+        int index = getIndexOfQuotationById(id);
+        if(index == -1){
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
+            return;
+        }
+        quotations.remove(index);
+        System.out.printf("%d번 명언은 삭제되었습니다.\n", id);
+
+    }
+
+    //해당 Quotation.id의 Quotation index 찾기
+    int getIndexOfQuotationById(int id) {
+        for (int i = 0; i < quotations.size(); i++) {
+            Quotation quotation = quotations.get(i);
+
+            if(quotation.id == id){
+                return i;
+            }
+        }
+
+        return -1;
 
     }
 
     void actionModify(Rq rq) {
         int id = rq.getParamAsInt("id", 0);
-        if (id == 0){
+        if (id == 0) {
             System.out.println("id를 정확히 입력해주세요.");
             return;
         }
