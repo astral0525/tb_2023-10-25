@@ -7,14 +7,16 @@ import java.util.Scanner;
 class App {
 
     static int lastQuotationId;
-    static List<Quotation> quotations ;
+    static List<Quotation> quotations;
     Scanner scanner;
-    App(){
+
+    App() {
         lastQuotationId = 0;
         quotations = new ArrayList<>();
         scanner = new Scanner(System.in);
 
     }
+
     void run() {
         while (true) {
             System.out.printf("명령) ");
@@ -28,6 +30,8 @@ class App {
 
             } else if (cmd.equals("목록")) {
                 actionList();
+            } else if (cmd.startsWith("삭제?")) {
+                actionRemove(cmd);
             }
 
         }
@@ -53,5 +57,37 @@ class App {
         System.out.println("총개수 : " + quotations.size());
     }
 
+    void actionRemove(String cmd) {
+        int id = getParamAsInt(cmd, "id", 0);
+        if(id == 0){
+            System.out.println("id를 정확히 입력해주세요");
+        }
+        System.out.printf("%d번 명언을 삭제합니다\n", id);
+    }
+
+    int getParamAsInt(String cmd, String paramName, int defaultValue) {
+
+        String[] cmdBits = cmd.split("\\?", 2);
+        //String action = cmdBits[0]; //ex)삭제
+        String queryString = cmdBits[1]; //ex)id=3&archive=true
+
+        String[] queryStringBits = queryString.split("&"); //ex)id=3, archive=true..
+        for (int i = 0; i < queryStringBits.length; i++) {
+            String queryParamStr = queryStringBits[i];
+            String[] queryParamStrBits = queryParamStr.split("=", 2);
+            String _paramName = queryParamStrBits[0]; //ex) id
+            String paramValue = queryParamStrBits[1]; //ex)3
+
+            if (_paramName.equals(paramName)) {
+                try {
+                    return Integer.parseInt(paramValue);
+                } catch (NumberFormatException e) {
+                    return defaultValue;
+                }
+            }
+        }
+        return defaultValue;
+
+    }
 
 }
